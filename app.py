@@ -1,8 +1,8 @@
 from flask import Flask, render_template, redirect, url_for, flash, request
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import RegistrationForm, LoginForm, SubmitPhotoForm
+from db import db  # Import db instance
 import os
 
 app = Flask(__name__)
@@ -10,10 +10,12 @@ app.config['SECRET_KEY'] = 'secret-key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///photo_stock.db'
 app.config['UPLOAD_FOLDER'] = 'static/images'
 
-db = SQLAlchemy(app)
+# Initialize db and login_manager
+db.init_app(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
+# Import models after initializing db
 from models import User, Photo
 
 @login_manager.user_loader
@@ -60,13 +62,17 @@ def logout():
 def submit_photo():
     form = SubmitPhotoForm()
     if form.validate_on_submit():
-        # Simulate submission with a placeholder image
-        placeholder_image = 'placeholder.jpg'  # Example placeholder image
-        new_photo = Photo(image=placeholder_image, user_id=current_user.id)
-        db.session.add(new_photo)
-        db.session.commit()
-        flash('Photo submitted successfully!', 'success')
-        return redirect(url_for('home'))
+        if 'photo' in request.files:
+            photo_file = request.files['photo']
+            if photo_file:
+                filename = os.path.join(app.config['UPLOAD_FOLDER'], photo_file.filename)
+                photo_file.save(filename)
+                new_photo = Photo(image=photo_file.filename, user_id=current_user.id)
+                db.session.add(new_photo)
+                db.session.commit()
+                flash('Photo submitted successfully!', 'success')
+                return redirect(url_for('home'))
+        flash('No photo uploaded. Please try again.', 'danger')
     return render_template('submit.html', form=form)
 
 @app.route('/photo/<int:photo_id>', methods=['GET', 'POST'])

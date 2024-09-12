@@ -12,3 +12,4 @@ class Photo(db.Model):
     image = db.Column(db.String(300), nullable=False)
     likes = db.Column(db.Integer, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    
