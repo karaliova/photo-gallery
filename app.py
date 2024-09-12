@@ -1,14 +1,12 @@
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from forms import RegistrationForm, LoginForm, SubmitPhotoForm
-from db import db  # Import db instance
-import os
+from forms import RegistrationForm, LoginForm
+from db import db
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret-key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///photo_stock.db'
-app.config['UPLOAD_FOLDER'] = 'static/images'
 
 # Initialize db and login_manager
 db.init_app(app)
@@ -22,7 +20,22 @@ from models import User, Photo
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+@app.before_first_request
+def create_tables():
+    db.create_all()
+    # Add default photos if the table is empty
+    if not Photo.query.first():
+        default_photos = [
+            {"image": "default1.jpg", "likes": 0},
+            {"image": "default2.jpg", "likes": 0},
+            {"image": "default3.jpg", "likes": 0}
+        ]
+        for photo in default_photos:
+            db.session.add(Photo(**photo))
+        db.session.commit()
+
 @app.route('/')
+@login_required
 def home():
     photos = Photo.query.all()
     return render_template('home.html', photos=photos)
@@ -57,36 +70,19 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-@app.route('/submit', methods=['GET', 'POST'])
+@app.route('/photo/<int:photo_id>', methods=['POST'])
 @login_required
-def submit_photo():
-    form = SubmitPhotoForm()
-    if form.validate_on_submit():
-        if 'photo' in request.files:
-            photo_file = request.files['photo']
-            if photo_file:
-                filename = os.path.join(app.config['UPLOAD_FOLDER'], photo_file.filename)
-                photo_file.save(filename)
-                new_photo = Photo(image=photo_file.filename, user_id=current_user.id)
-                db.session.add(new_photo)
-                db.session.commit()
-                flash('Photo submitted successfully!', 'success')
-                return redirect(url_for('home'))
-        flash('No photo uploaded. Please try again.', 'danger')
-    return render_template('submit.html', form=form)
-
-@app.route('/photo/<int:photo_id>', methods=['GET', 'POST'])
-def photo_detail(photo_id):
+def photo_action(photo_id):
     photo = Photo.query.get_or_404(photo_id)
     
-    if request.method == 'POST':
-        if 'like' in request.form:
-            photo.likes += 1
-        elif 'buy' in request.form:
-            flash('Pretend you have bought this photo!', 'success')
-        db.session.commit()
+    if 'like' in request.form:
+        photo.likes += 1
+        flash('Photo liked!', 'success')
+    elif 'buy' in request.form:
+        flash('Pretend you have bought this photo!', 'success')
     
-    return render_template('photo_detail.html', photo=photo)
+    db.session.commit()
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Library</title>
+</head>
+<body>
+    <h1>Welcome to the Photo Library</h1>
+    <a href="{{ url_for('logout') }}">Logout</a>
+
+    <h2>Photos</h2>
+    <ul>
+        {% for photo in photos %}
+        <li>
+            <img src="{{ url_for('static', filename='images/' ~ photo.image) }}" alt="Photo" width="200">
+            <p>Likes: {{ photo.likes }}</p>
+            <form action="{{ url_for('photo_action', photo_id=photo.id) }}" method="post">
+                <button name="like" type="submit">Like</button>
+                <button name="buy" type="submit">Buy</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
