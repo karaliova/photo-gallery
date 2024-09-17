@@ -1,0 +1,97 @@
+ /* Basic styling for body */
+body {
+    background-color: #faf0e6;
+    font-family: Coolvetica;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Horizontal navigation bar */
+nav {
+    letter-spacing: 1px;
+    font-size: 26px;
+    background-color: #b4885d;
+    padding: 10px 0;
+
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Make the items align horizontally */
+    justify-content: center; /* Center the navigation items */
+}
+
+nav ul li {
+    margin: 0 15px; /* Space between the items */
+}
+
+nav ul li a {
+    color: rgb(253, 244, 233);
+    text-decoration: none;
+    padding: 10px;
+}
+
+nav ul li a:hover {
+    background-color: #faf0e6;
+    color:#b4885d
+}
+
+/* Main section styling */
+section {
+    padding: 20px;
+}
+
+/* Heading styling */
+h1 {
+    color:#b4885d;
+    font-size: 44px;
+    margin-bottom: 10px;
+}
+
+/* Gallery layout styling */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Photo item styling */
+.photo-item {
+    text-align: center;
+}
+
+.photo-item img {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+}
+
+/* Button styling */
+button {
+    margin: 5px;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #575757;
+}
+
+/* Link button styling */
+.button {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.button:hover {
+    background-color: #575757;
+}
