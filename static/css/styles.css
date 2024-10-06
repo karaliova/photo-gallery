@@ -1,7 +1,7 @@
- /* Basic styling for body */
+/* Basic styling for body */
 body {
-    background-color: #faf0e6;
-    font-family: Coolvetica;
+    background-color: #0e0e0e;
+    font-family: Oswald;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -10,10 +10,9 @@ body {
 /* Horizontal navigation bar */
 nav {
     letter-spacing: 1px;
-    font-size: 26px;
-    background-color: #b4885d;
-    padding: 10px 0;
-
+    font-size: 20px;
+    background-color: #0e0e0e;
+    padding: 14px 0;
 }
 
 nav ul {
@@ -29,26 +28,87 @@ nav ul li {
 }
 
 nav ul li a {
-    color: rgb(253, 244, 233);
+    color: rgb(255, 255, 255);
     text-decoration: none;
     padding: 10px;
 }
 
 nav ul li a:hover {
-    background-color: #faf0e6;
-    color:#b4885d
+    background-color: #ffffff;
+    color: #0e0e0e;
+}
+
+/* Introductory section styling */
+.intro {
+    background-image: url('C:/Users/Lenovo/Desktop/programing/PROJECT/static/images/img3.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 560px; /* Adjust as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.intro .button {
+    background-color: rgba(255, 255, 255, 0.228);
+    margin: 10px;
+    padding: 15px 45px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    border: 6px white;
+    display: block;
+}
+
+.intro .button:hover {
+    background-color: #ffffffb7;
+    color: #0e0e0e;
 }
 
 /* Main section styling */
-section {
+.section {
     padding: 20px;
+}
+
+.section-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.section-content img {
+    width: 50%;
+    height: auto;
+    object-fit: cover;
+}
+
+.section-content .text {
+    width: 50%;
+}
+
+/* Specific layout for each section */
+.first .section-content {
+    flex-direction: row;
+}
+
+.second .section-content {
+    flex-direction: row-reverse;
+}
+
+.third .section-content {
+    flex-direction: row;
 }
 
 /* Heading styling */
 h1 {
-    color:#b4885d;
+    color: #ffffff;
     font-size: 44px;
     margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 /* Gallery layout styling */
@@ -69,29 +129,19 @@ h1 {
     object-fit: cover;
 }
 
-/* Button styling */
-button {
-    margin: 5px;
-    padding: 10px;
-    background-color: #333;
-    color: white;
-    border: none;
-    cursor: pointer;
+.buttons {
+    display: flex;
+    justify-content: center;  /* Center buttons horizontally */
+    align-items: center;      /* Center buttons vertically */
+    gap: 10px;                /* Add some space between the buttons */
+    height: 100px;            /* Ensure the buttons container has enough height */
 }
 
-button:hover {
-    background-color: #575757;
+footer {
+    font-size: 12px;
+    color:#ffffff;
 }
 
-/* Link button styling */
-.button {
-    background-color: #333;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    display: inline-block;
-}
+ 
+ 
 
-.button:hover {
-    background-color: #575757;
-}

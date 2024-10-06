@@ -9,48 +9,183 @@
 <body>
     <nav>
         <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="blog.html">Blog</a></li>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="gallery.html">GALLERY</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+            <li><a href="blog.html">BLOG</a></li>
         </ul>
     </nav>
 
     <section>
-        <h1>Gallery</h1>
+        <h1>  &nbsp;&nbsp;&nbsp;Gallery</h1>
 
         <div class="gallery">
             <div class="photo-item">
-                <img src="static/images/default1.jpg" alt="Nature Photo">
-                <p>Nature</p>
-                <button>Like</button>
-                <button>Buy</button>
+                <img src="static/images/img6.jpg" alt="Nature Photo" onclick="openModal(this)">
+                <div class="buttons">
+                    <button class="button_like" onclick="changeLikeColor(this)">Like</button>
+                    <a href="static/images/img6.jpg" download="img6.jpg"><button class="button_buy">Buy</button></a>
+                </div>
             </div>
             <div class="photo-item">
-                <img src="static/images/default2.jpg" alt="City Photo">
-                <p>City</p>
-                <button>Like</button>
-                <button>Buy</button>
+                <img src="static/images/img7.jpg" alt="City Photo" onclick="openModal(this)">
+                <div class="buttons">
+                    <button class="button_like" onclick="changeLikeColor(this)">Like</button>
+                    <a href="static/images/img7.jpg" download="img7.jpg"><button class="button_buy">Buy</button></a>
+                </div>
             </div>
             <div class="photo-item">
-                <img src="static/images/default3.jpg" alt="Abstract Photo">
-                <p>Abstract</p>
-                <button>Like</button>
-                <button>Buy</button>
+                <img src="static/images/img8.jpg" alt="Abstract Photo" onclick="openModal(this)">
+                <div class="buttons">
+                    <button class="button_like" onclick="changeLikeColor(this)">Like</button>
+                    <a href="static/images/img8.jpg" download="img8.jpg"><button class="button_buy">Buy</button></a>
+                </div>
             </div>
             <div class="photo-item">
-                <img src="static/images/default4.jpg" alt="Nature Photo">
-                <p>Nature</p>
-                <button>Like</button>
-                <button>Buy</button>
+                <img src="static/images/img9.jpg" alt="Nature Photo" onclick="openModal(this)">
+                <div class="buttons">
+                    <button class="button_like" onclick="changeLikeColor(this)">Like</button>
+                    <a href="static/images/img9.jpg" download="img9.jpg"><button class="button_buy">Buy</button></a>
+                </div>
             </div>
             <div class="photo-item">
-                <img src="static/images/default5.jpg" alt="City Photo">
-                <p>City</p>
-                <button>Like</button>
-                <button>Buy</button>
+                <img src="static/images/img10.jpg" alt="City Photo" onclick="openModal(this)">
+                <div class="buttons">
+                    <button class="button_like" onclick="changeLikeColor(this)">Like</button>
+                    <a href="static/images/img10.jpg" download="img10.jpg"><button class="button_buy">Buy</button></a>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- Fullscreen modal for viewing image -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="fullImage">
+    </div>
+
+    <script>
+        // Toggle Like button color
+        function changeLikeColor(button) {
+            if (button.classList.contains("clicked")) {
+                button.classList.remove("clicked");
+            } else {
+                button.classList.add("clicked");
+            }
+        }
+
+        // Open modal to view image in fullscreen
+        function openModal(imgElement) {
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("fullImage");
+
+            modal.style.display = "flex"; // Show the modal (flex layout)
+            modalImg.src = imgElement.src; // Set the clicked image source to the modal
+        }
+
+        // Close the modal
+        function closeModal() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+    </script>
+
+    <style>
+        /* Gallery styling */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .photo-item {
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            padding: 0px;
+            position: relative;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            cursor: pointer; /* Change cursor to pointer on hover */
+            margin-bottom: 1px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            height: 100px;
+            padding: 0;
+        }
+
+        .button_like, .button_buy {
+            font-family: Oswald;
+            padding: 8px 14px;
+            font-size: 20px;
+            cursor: pointer;
+            border: 1px;
+            color: white;
+            background-color: rgb(48, 48, 48);
+            transition: background-color 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .button_like:hover, .button_buy:hover {
+            background-color: rgb(90, 90, 90);
+        }
+
+        .button_like.clicked {
+            background-color: rgb(255, 75, 105) !important;
+        }
+
+        /* Modal styling */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); /* Black background with opacity */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain; /* Ensure the image scales properly inside the modal */
+        }
+
+        /* Close button */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #bbb;
+        }
+    </style>
 </body>
 </html>
+
+
+
