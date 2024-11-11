@@ -1,5 +1,4 @@
 # Photo gallery
-#### Video Demo:  <(https://youtu.be/_hCsRVOPV1Y)>
 #### Description:
 This project is an interactive photo gallery where users can explore, like, and purchase images. Visitors can also connect with creators via a contact form and enjoy reading articles in the blog section.
 
